@@ -12,7 +12,7 @@ class Entity {
 			this.color = "rgb(255, 255, 255)";
 		}
 		this.geometry = new THREE.BoxGeometry();
-		this.material = new THREE.MeshBasicMaterial({
+		this.material = new THREE.MeshLambertMaterial({
 			color: this.color
 		});
 		this.cube = new THREE.Mesh(
@@ -23,6 +23,8 @@ class Entity {
 		this.cube.position.x = this.x;
 		this.cube.position.y = this.y;
 		this.cube.position.z = this.z;
+		this.cube.castShadow = true;
+		this.cube.reciveShadow = true;
 	}
 	update() {
 		

@@ -18,15 +18,19 @@ class Player extends Entity {
 	update() {
 		if (this.keys.left) {
 			this.cube.position.x += this.speed;
+			this.game.camera.position.x += this.speed;
 		}
 		if (this.keys.right) {
 			this.cube.position.x -= this.speed;
+			this.game.camera.position.x -= this.speed;
 		}
-		if (this.cube.position.x < -5) {
-			this.cube.position.x = -5;
+		if (this.cube.position.x < this.game.bounds.right) {
+			this.cube.position.x = this.game.bounds.right;
+			this.game.camera.position.x = this.game.bounds.right;
 		}
-		if (this.cube.position.x > 5) {
-			this.cube.position.x = 5;
+		if (this.cube.position.x > this.game.bounds.left) {
+			this.cube.position.x = this.game.bounds.left;
+			this.game.camera.position.x = this.game.bounds.left;
 		}
 	}
 	collide(collider) {

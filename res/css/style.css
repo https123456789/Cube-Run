@@ -1,14 +1,34 @@
 body {
 	margin: 0;
+	padding: 0;
 	background-color: rgba(50, 50, 50, 1);
+	/*overflow-x: hidden;*/
 }
 
 #info {
-	position: absolute;
-	top: 1%;
-	left: 1%;
-	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
 	z-index: 100;
 	display: block;
 	color: rgb(255, 255, 255);
+	/*border: 1px solid #ffffff;*/
+	display: grid;
+	grid-template-columns: auto auto auto auto;
+	grid-template-rows: auto auto;
+}
+
+#info > * {
+	/*border: 1px solid rgb(255, 255, 255);*/
+}
+
+#textCanvas {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 101;
+	display: none;
 }

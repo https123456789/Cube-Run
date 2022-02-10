@@ -17,24 +17,36 @@ class Game {
 			window.innerWidth,
 			window.innerHeight
 		);
+		this.renderer.shadowMap.enabled = true;
+		this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 		document.body.appendChild(this.renderer.domElement);
 		/* Game Components */
 		this.gameFloor = new GameFloor(this);
 		this.player = new Player(this);
+		this.gameLighting = new GameLighting(this);
+
+		this.bounds = {
+			left: 5,
+			right: -5
+		};
 
 		this.paused = false;
+		this.textCanvas = document.getElementById("textCanvas");
+		this.textCanvasCtx = this.textCanvas.getContext("2d");
+		this.textCanvasCtx.height = 200;
+		this.textCanvasCtx.width = 200;
 
 		/* Levels */
 		this.level = 1;
 		this.levelChanges = false;
-		this.levelTimeSwitch = 10000;
+		this.levelTimeSwitch = 20000;
 		this.levelStartTime = null;
-		
+
 		/* Obstacles */
 		this.obstacles = [];
-		this.obstacleMax = 10;
+		this.obstacleMax = 20;
 		this.obstacleIndex = 0;
-		this.obstacleSpeed = 0.1;
+		this.obstacleSpeed = 0.2;
 		
 		this.updater = null;
 		/* Set Default Key Bindings */
@@ -65,6 +77,20 @@ class Game {
 		}, (1000/60));
 	}
 	die() {
+		//this.textCanvas.style.display = "block";
+		this.textCanvasUpdate();
+		this.textCanvasCtx.font = '50px serif';
+		this.textCanvasCtx.fillStyle = "rgb(255, 255, 255)";
+		this.textCanvasCtx.fillText(
+			"Game Over!",
+			(
+				0.1 * this.textCanvas.width
+			),
+			(
+				0.5 * this.textCanvas.height
+			),
+			this.textCanvas.width
+		);
 		window.clearInterval(this.updater);
 	}
 	update() {
@@ -77,7 +103,8 @@ class Game {
 			this.level += 1;
 			this.levelStartTime = now;
 			this.levelChanged = true;
-			this.levelTimeSwitch += 1000;
+			this.levelTimeSwitch += 100;
+			this.obstacleMax += parseInt(0.1 * this.obstacleMax);
 		}
 		if (this.levelChanged) {
 			this.obstacleSpeed += 0.01;
@@ -85,6 +112,9 @@ class Game {
 		}
 		/* Update Labels */
 		document.getElementById("levelDisplay").innerHTML = this.level;
+		document.getElementById("version").innerHTML = VERSION;
+		document.getElementById("versionSuffix").innerHTML = VERSION_SUFFIX;
+		document.getElementById("obstmax").innerHTML = this.obstacleMax;
 		/* Three update */
 		this.updateSize();
 		/* Update Entities */
@@ -92,6 +122,15 @@ class Game {
 		this.player.update();
 		/* Render */
 		this.renderer.render(this.scene, this.camera);
+	}
+	textCanvasUpdate() {
+		this.textCanvasCtx.fillStyle = "rgb(0, 0, 0)";
+		this.textCanvasCtx.fillRect(
+			0,
+			0,
+			this.textCanvasCtx.canvas.width,
+			this.textCanvasCtx.canvas.height
+		);
 	}
 	updateSize() {
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -104,10 +143,12 @@ class Game {
 		if (this.obstacles.length >= this.obstacleMax) {
 			return;
 		}
-		this.spawnObstacle();
+		if ((new Date).getTime() % 10 == 0) {
+			this.spawnObstacle();
+		}
 	}
 	spawnObstacle() {
-		var x = Math.floor(Math.random() * 20);
+		var x = Math.floor(Math.random() * (this.bounds.left * 2));
 		// Make even values negative
 		if (x % 2 == 0) {
 			x *= -1;
@@ -124,7 +165,7 @@ class GameFloor {
 	constructor(game) {
 		this.game = game;
 		this.geometry = new THREE.PlaneGeometry(1, 1);
-		this.material = new THREE.MeshBasicMaterial({
+		this.material = new THREE.MeshPhongMaterial({
 			color: "rgb(255, 255, 255)",
 			side: THREE.DoubleSide
 		});
@@ -137,9 +178,25 @@ class GameFloor {
 		this.mesh.scale.y = window.innerHeight;
 		this.mesh.position.z += window.innerHeight / 4;
 		this.mesh.position.y -= 0.5;
+		this.mesh.reciveShadow = true;
+		this.mesh.castShadow = false;
 		this.game.scene.add(this.mesh);
 	}
 	update() {
 		
+	}
+}
+
+class GameLighting {
+	constructor(game) {
+		this.game = game;
+		this.light = new THREE.PointLight("rgb(255, 255, 255)", 1, 100);
+		this.light.position.set(0, 5, -5);
+		this.light.castShadow = true;
+		this.game.scene.add(this.light);
+		this.light.shadow.mapSize.width = 512;
+		this.light.shadow.mapSize.height = 512;
+		this.light.shadow.camera.near = 0.5;
+		this.light.shadow.camera.far = 500;
 	}
 }

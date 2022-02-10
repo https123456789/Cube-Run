@@ -24,7 +24,11 @@ class Obstacle extends Entity {
 		}
 		// Check collision
 		for (var vertexIndex = 0; vertexIndex < this.cube.geometry.attributes.position.array.length; vertexIndex++) {
-			var localVertex = new THREE.Vector3().fromBufferAttribute(this.cube.geometry.attributes.position, vertexIndex).clone();
+			var localVertex = new THREE.Vector3()
+				.fromBufferAttribute(
+					this.cube.geometry.attributes.position,
+					vertexIndex
+				).clone();
 			var globalVertex = localVertex
 				.applyMatrix4(this.cube.matrix);
 			var directionVector = globalVertex

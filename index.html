@@ -3,12 +3,19 @@
 	<head>
 		<title>Cube Run</title>
 		<link rel="stylesheet" href="res/css/style.css?rnd=1">
+		<script>
+			VERSION = "0.1.0";
+			VERSION_SUFFIX = "(beta)";
+		</script>
 	</head>
 	<body>
 		<div id="info">
-			<p>Level <span id="levelDisplay"></span></p>
-			<p>v0.1.0 (Beta)</p>
+			<p style="text-align: center; grid-column: 1 / 5;">Level <span id="levelDisplay">Loading...</span></p>
+			<p>Obstacle Max: <span id="obstmax">Loading...</span></p>
+			<p style="grid-column: 2/4;"></p>
+			<p style="text-align: right;">v<span id="version">Loading...</span> <span id="versionSuffix">Loading...</span></p>
 		</div>
+		<canvas id="textCanvas"></canvas>
 		<script src="res/lib/three.js"></script>
 
 		<script src="res/js/entity.js"></script>
