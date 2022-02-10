@@ -77,6 +77,7 @@ class Game {
 			this.level += 1;
 			this.levelStartTime = now;
 			this.levelChanged = true;
+			this.levelTimeSwitch += 1000;
 		}
 		if (this.levelChanged) {
 			this.obstacleSpeed += 0.01;
