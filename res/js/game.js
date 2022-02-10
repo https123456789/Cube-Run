@@ -21,14 +21,17 @@ class Game {
 		this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 		document.body.appendChild(this.renderer.domElement);
 		/* Game Components */
+		this.bounds = {
+			left: 50,
+			right: -50
+		};
+		
 		this.gameFloor = new GameFloor(this);
 		this.player = new Player(this);
-		this.gameLighting = new GameLighting(this);
-
-		this.bounds = {
-			left: 5,
-			right: -5
-		};
+		this.gameLighting = new GameLighting(this, 0, 5, -5, 0xffffff, 0);
+		//this.leftLighting = new GameLighting(this, this.bounds.left, 0, 20, 0xffffff, 2);
+		//this.rightLighting = new GameLighting(this, this.bounds.right, 0, 20, 0xffffff, 2);
+		//this.movingSpotLight = new MovingSpotLight(this);
 
 		this.paused = false;
 		this.textCanvas = document.getElementById("textCanvas");
@@ -118,6 +121,9 @@ class Game {
 		/* Three update */
 		this.updateSize();
 		/* Update Entities */
+		if (this.gameLighting.light.intensity < 1) {
+			this.gameLighting.light.intensity += 0.01;
+		}
 		this.updateObstacles();
 		this.player.update();
 		/* Render */
@@ -148,7 +154,7 @@ class Game {
 		}
 	}
 	spawnObstacle() {
-		var x = Math.floor(Math.random() * (this.bounds.left * 2));
+		var x = Math.floor(Math.random() * (this.bounds.left * 1));
 		// Make even values negative
 		if (x % 2 == 0) {
 			x *= -1;
@@ -184,19 +190,5 @@ class GameFloor {
 	}
 	update() {
 		
-	}
-}
-
-class GameLighting {
-	constructor(game) {
-		this.game = game;
-		this.light = new THREE.PointLight("rgb(255, 255, 255)", 1, 100);
-		this.light.position.set(0, 5, -5);
-		this.light.castShadow = true;
-		this.game.scene.add(this.light);
-		this.light.shadow.mapSize.width = 512;
-		this.light.shadow.mapSize.height = 512;
-		this.light.shadow.camera.near = 0.5;
-		this.light.shadow.camera.far = 500;
 	}
 }
