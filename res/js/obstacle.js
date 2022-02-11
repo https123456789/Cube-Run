@@ -66,7 +66,7 @@ class RectangularObstacle extends Obstacle {
 		this.distortAxis = distortAxis;
 		this.distortAmount = distortAmount;
 		this.cube.scale[this.distortAxis] *= this.distortAmount;
-		this.cube.material.color.setHex(0x00ffff);
+		this.cube.material.color.setHex(0xff0000);
 		// Distortion animations
 		this.distdir = 1;
 	}
@@ -109,7 +109,7 @@ class RotatingObstacle extends Obstacle {
 		super(game, x, y, z, index);
 		this.rotspeed = rotspeed;
 		this.rotAxis = rotAxis;
-		this.cube.material.color.setHex(0x00ff00);
+		this.cube.material.color.setHex(0xff0000);
 		this.cube.scale.x *= 2;
 		this.cube.scale.z *= 2;
 		this.cube.scale.y *= 2;

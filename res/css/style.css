@@ -35,7 +35,7 @@ body {
 }
 
 #pauseMenu {
-	
+	font-family: ubuntu, monospace;
 }
 
 #unpauseBtn {
@@ -44,6 +44,12 @@ body {
 	position: fixed;
 	top: 10vh;
 	right: 10vw;
+	border: none;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+#unpauseBtn:hover {
+	background-color: rgba(200, 200, 200, 0.5);
 }
 
 #gameOver {

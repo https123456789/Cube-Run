@@ -98,8 +98,10 @@ class Game {
 		}
 		/* Update Labels */
 		document.getElementById("levelDisplay").innerHTML = this.level;
-		document.getElementById("version").innerHTML = VERSION;
-		document.getElementById("versionSuffix").innerHTML = VERSION_SUFFIX;
+		var els = document.getElementsByClassName("javascript-version-label");
+		for (var i = 0; i < els.length; i++) {
+			els[i].innerHTML = "v" + VERSION + " " + VERSION_SUFFIX;
+		}
 		document.getElementById("obstmax").innerHTML = this.obstacleMax;
 		/* Three update */
 		this.updateSize();
@@ -125,7 +127,6 @@ class Game {
 		}
 		if ((new Date).getTime() % 10 == 0) {
 			var r = Math.floor(Math.random() * 10);
-			console.log(r);
 			switch (r) {
 				case 10:
 				case 9:
