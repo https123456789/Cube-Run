@@ -1,7 +1,8 @@
 class Obstacle extends Entity {
 	constructor(game, x, y, z, index) {
+		var c = "rgb(" + (Math.floor(Math.random() * 155) + 200) + ", " + (Math.floor(Math.random() * 50)) + ", 0)";
 		super(game, 10, 10, x, y, z, {
-			color: 0xff0000
+			color: c
 		});
 		this.index = index;
 	}
@@ -56,6 +57,38 @@ class Obstacle extends Entity {
 	}
 }
 
+class BasicObstacle extends Obstacle {
+	constructor(game, x, y, z, index) {
+		super(game, x, y, z, index);
+	}
+}
+
+class RotatingObstacle extends Obstacle {
+	constructor(game, x, y, z, index, rotspeed, rotAxis) {
+		super(game, x, y, z, index);
+		this.rotspeed = rotspeed;
+		this.rotAxis = rotAxis;
+		this.cube.material.color.setHex(0xff0000);
+		this.cube.scale.x *= 2;
+		this.cube.scale.z *= 2;
+		this.cube.scale.y *= 2;
+		//this.cube.position.y += 1;
+	}
+	update() {
+		// Update position
+		this.updatePosition();
+		// Add rotation
+		this.updateRotation();
+		// Check if off map
+		this.mapBoundsCheck();
+		// Check collision
+		this.preformCollisionCheck();
+	}
+	updateRotation() {
+		this.cube.rotation[this.rotAxis] += this.rotspeed;
+	}
+}
+
 class RectangularObstacle extends Obstacle {
 	constructor(game, x, y, z, index, distortAxis, distortAmount = 2, config = {}) {
 		super(game, x, y, z, {
@@ -95,37 +128,5 @@ class RectangularObstacle extends Obstacle {
 				}
 			}
 		}
-	}
-}
-
-class BasicObstacle extends Obstacle {
-	constructor(game, x, y, z, index) {
-		super(game, x, y, z, index);
-	}
-}
-
-class RotatingObstacle extends Obstacle {
-	constructor(game, x, y, z, index, rotspeed, rotAxis) {
-		super(game, x, y, z, index);
-		this.rotspeed = rotspeed;
-		this.rotAxis = rotAxis;
-		this.cube.material.color.setHex(0xff0000);
-		this.cube.scale.x *= 2;
-		this.cube.scale.z *= 2;
-		this.cube.scale.y *= 2;
-		//this.cube.position.y += 1;
-	}
-	update() {
-		// Update position
-		this.updatePosition();
-		// Add rotation
-		this.updateRotation();
-		// Check if off map
-		this.mapBoundsCheck();
-		// Check collision
-		this.preformCollisionCheck();
-	}
-	updateRotation() {
-		this.cube.rotation[this.rotAxis] += this.rotspeed;
 	}
 }
