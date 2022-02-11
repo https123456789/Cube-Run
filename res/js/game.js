@@ -43,7 +43,7 @@ class Game {
 
 		/* Obstacles */
 		this.obstacles = [];
-		this.obstacleMax = 20 + Math.floor(this.bounds.left * 0.1);
+		this.obstacleMax = 20 + Math.floor(this.bounds.left * 0.2);
 		this.obstacleIndex = 0;
 		this.obstacleSpeed = 0.2;
 		
@@ -89,8 +89,8 @@ class Game {
 			this.level += 1;
 			this.levelStartTime = now;
 			this.levelChanged = true;
-			this.levelTimeSwitch += 100;
-			this.obstacleMax += parseInt(0.1 * this.obstacleMax);
+			this.levelTimeSwitch += 1;
+			this.obstacleMax += parseInt(0.2 * this.obstacleMax);
 		}
 		if (this.levelChanged) {
 			this.obstacleSpeed += 0.01;
@@ -125,10 +125,21 @@ class Game {
 		}
 		if ((new Date).getTime() % 10 == 0) {
 			var r = Math.floor(Math.random() * 10);
-			if (r > 5) {
-				this.spawnBasicObstacle();
-			} else {
-				this.spawnRotatingObstacle();
+			console.log(r);
+			switch (r) {
+				case 10:
+				case 9:
+					this.spawnRotatingObstacle();
+					break;
+				case 8:
+				case 7:
+				case 6:
+				case 5:
+					this.spawnRectObstacle();
+					break;
+				default:
+					this.spawnBasicObstacle();
+					break;
 			}
 		}
 	}
@@ -155,7 +166,35 @@ class Game {
 		}
 		var y = 0;
 		var z = 100;
-		var newobst = new RotatingObstacle(this, x, y, z, this.obstacleIndex, 0.01, "y");
+		var axs = ["x", "y", "z"];
+		var newobst = new RotatingObstacle(this, x, y, z, this.obstacleIndex, 0.01, axs[(Math.floor(Math.random() * 3))]);
+		this.obstacleIndex += 1;
+		this.obstacles.push(newobst);
+	}
+
+	spawnRectObstacle() {
+		var x = Math.floor(Math.random() * (this.bounds.left * 1));
+		// Make even values negative
+		if (x % 2 == 0) {
+			x *= -1;
+		}
+		var y = 0;
+		var z = 100;
+		var axs = ["x","z"];
+		var newobst = new RectangularObstacle(
+			this,
+			x, y, z,
+			this.obstacleIndex,
+			axs[(Math.floor(Math.random() * axs.length))],
+			Math.floor(Math.random() * 5) + 1,
+			{
+				distortAnimations: {
+					loop: {
+						incr: 0.1
+					}
+				}
+			}
+		);
 		this.obstacleIndex += 1;
 		this.obstacles.push(newobst);
 	}

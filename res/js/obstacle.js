@@ -65,7 +65,10 @@ class RectangularObstacle extends Obstacle {
 		this.config = config;
 		this.distortAxis = distortAxis;
 		this.distortAmount = distortAmount;
-		this.cube.scale[this.distortAxis] *= this.dirstorAmount;
+		this.cube.scale[this.distortAxis] *= this.distortAmount;
+		this.cube.material.color.setHex(0x00ffff);
+		// Distortion animations
+		this.distdir = 1;
 	}
 	update() {
 		// Update position
@@ -80,7 +83,16 @@ class RectangularObstacle extends Obstacle {
 	updateDistortions() {
 		if (this.config.distortAnimations) {
 			if (this.config.distortAnimations.loop) {
-				
+				if (!this.config.distortAnimations.loop.incr) {
+					return;
+				}
+				this.cube.scale[this.distortAxis] += this.distdir * this.config.distortAnimations.loop.incr;
+				if (this.cube.scale[this.distortAxis] >= this.distortAmount + 1) {
+					this.distdir = -1;
+				}
+				if (this.cube.scale[this.distortAxis] <= this.distortAmount - 1) {
+					this.distdir = 1;
+				}
 			}
 		}
 	}
@@ -98,6 +110,10 @@ class RotatingObstacle extends Obstacle {
 		this.rotspeed = rotspeed;
 		this.rotAxis = rotAxis;
 		this.cube.material.color.setHex(0x00ff00);
+		this.cube.scale.x *= 2;
+		this.cube.scale.z *= 2;
+		this.cube.scale.y *= 2;
+		//this.cube.position.y += 1;
 	}
 	update() {
 		// Update position
