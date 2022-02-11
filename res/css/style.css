@@ -3,7 +3,7 @@ body {
 	padding: 0;
 	background-color: rgba(50, 50, 50, 1);
 	/*overflow-x: hidden;*/
-	font-family: "GAMERIA";
+	font-family: ubuntu, courier new, verdana;
 }
 
 #info {
@@ -32,4 +32,36 @@ body {
 	height: 100vh;
 	z-index: 101;
 	display: none;
+}
+
+#pauseMenu {
+	
+}
+
+#unpauseBtn {
+	height: 2em;
+	width: 2em;
+	position: fixed;
+	top: 10vh;
+	right: 10vw;
+}
+
+#gameOver {
+	text-align: center;
+	font-family: monospace;
+	font-size: 10vh;
+	background-color: rgba(255, 255, 255, 0);
+	color: rgb(255, 255, 255);
+}
+
+.contextMenu {
+	display: none;
+	position: fixed;
+	top: 10vh;
+	left: 10vw;
+	right: 10vw;
+	bottom: 10vh;
+	z-index: 1000;
+	background-color: rgb(255, 255, 255);
+	padding: 1%;
 }

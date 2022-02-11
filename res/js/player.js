@@ -19,18 +19,22 @@ class Player extends Entity {
 		if (this.keys.left) {
 			this.cube.position.x += this.speed;
 			this.game.camera.position.x += this.speed;
+			this.game.gameLighting.light.position.x += this.speed;
 		}
 		if (this.keys.right) {
 			this.cube.position.x -= this.speed;
 			this.game.camera.position.x -= this.speed;
+			this.game.gameLighting.light.position.x -= this.speed;
 		}
 		if (this.cube.position.x < this.game.bounds.right) {
 			this.cube.position.x = this.game.bounds.right;
 			this.game.camera.position.x = this.game.bounds.right;
+			this.game.gameLighting.light.position.x = this.game.bounds.right;
 		}
 		if (this.cube.position.x > this.game.bounds.left) {
 			this.cube.position.x = this.game.bounds.left;
 			this.game.camera.position.x = this.game.bounds.left;
+			this.game.gameLighting.light.position.x = this.game.bounds.left;
 		}
 	}
 	collide(collider) {
@@ -40,27 +44,41 @@ class Player extends Entity {
 	keydownEvent(event) {
 		var key = event.key;
 		var action = this.checkKeyAction(key);
-		if (action > 1) {
+		if (action < 0) {
 			return;
 		}
-		if (action > 0) {
-			this.keys.right = true;
-			this.keys.left = false;
-		} else {
-			this.keys.left = true;
-			this.keys.right = false;
+		switch (action) {
+			case 0:
+				this.keys.left = true;
+				this.keys.right = false;
+				break;
+			case 1:
+				this.keys.right = true;
+				this.keys.left = false;
+				break;
+			case 2:
+				this.game.paused = !this.game.paused;
+				if (this.game.paused) {
+					document.getElementById("pauseMenu").style.display = "block";
+				} else {
+					document.getElementById("pauseMenu").style.display = "none";
+				}
+				break;
 		}
 	}
 	keyupEvent(evnet) {
 		var key = event.key;
 		var action = this.checkKeyAction(key);
-		if (action > 1) {
+		if (action < 0) {
 			return;
 		}
-		if (action > 0) {
-			this.keys.right = false;
-		} else {
-			this.keys.left = false;
+		switch (action) {
+			case 0:
+				this.keys.left = false;
+				break;
+			case 1:
+				this.keys.right = false;
+				break;
 		}
 	}
 	checkKeyAction(key) {
@@ -68,8 +86,10 @@ class Player extends Entity {
 			return 0;
 		} else if (key == window.gamedata.keybindings.selections[window.gamedata.keybindings.selection].right) {
 			return 1;
-		} else {
+		} else if (key == window.gamedata.keybindings.selections[window.gamedata.keybindings.selection].pause) {
 			return 2;
+		} else {
+			return -1;
 		}
 	}
 }

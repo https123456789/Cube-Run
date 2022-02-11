@@ -16,7 +16,13 @@
 			<p style="grid-column: 2/4;"></p>
 			<p style="text-align: right;">v<span id="version">Loading...</span> <span id="versionSuffix">Loading...</span></p>
 		</div>
-		<canvas id="textCanvas"></canvas>
+		<div id="pauseMenu" class="contextMenu">
+			<p style="text-align: center;">Game Is Paused</p>
+			<button onclick="game.unpause()" id="unpauseBtn">X</button>
+		</div>
+		<div id="gameOver" class="contextMenu">
+			<h1>Game Over!</h1>
+		</div>
 		<script src="res/lib/three.js"></script>
 
 		<script src="res/js/lighting.js"></script>

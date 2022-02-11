@@ -34,10 +34,6 @@ class Game {
 		//this.movingSpotLight = new MovingSpotLight(this);
 
 		this.paused = false;
-		this.textCanvas = document.getElementById("textCanvas");
-		this.textCanvasCtx = this.textCanvas.getContext("2d");
-		this.textCanvasCtx.height = 200;
-		this.textCanvasCtx.width = 200;
 
 		/* Levels */
 		this.level = 1;
@@ -59,17 +55,16 @@ class Game {
 				selections: {
 					default: {
 						left: "a",
-						right: "d"
+						right: "d",
+						pause: "p"
 					}
 				}
 			}
 		};
 
 		document.addEventListener("visibilitychange", (event) => {
-			if (document.hidden) {
-				this.paused = true;
-			} else {
-				this.paused = false;
+			if (document.hidden && this.updater) {
+				this.pause();
 			}
 		});
 	}
@@ -80,21 +75,9 @@ class Game {
 		}, (1000/60));
 	}
 	die() {
-		//this.textCanvas.style.display = "block";
-		this.textCanvasUpdate();
-		this.textCanvasCtx.font = '50px serif';
-		this.textCanvasCtx.fillStyle = "rgb(255, 255, 255)";
-		this.textCanvasCtx.fillText(
-			"Game Over!",
-			(
-				0.1 * this.textCanvas.width
-			),
-			(
-				0.5 * this.textCanvas.height
-			),
-			this.textCanvas.width
-		);
+		document.getElementById("gameOver").style.display = "block";
 		window.clearInterval(this.updater);
+		this.updater = null;
 	}
 	update() {
 		if (this.paused) {
@@ -122,21 +105,12 @@ class Game {
 		this.updateSize();
 		/* Update Entities */
 		if (this.gameLighting.light.intensity < 1) {
-			this.gameLighting.light.intensity += 0.01;
+			this.gameLighting.light.intensity += 0.002;
 		}
 		this.updateObstacles();
 		this.player.update();
 		/* Render */
 		this.renderer.render(this.scene, this.camera);
-	}
-	textCanvasUpdate() {
-		this.textCanvasCtx.fillStyle = "rgb(0, 0, 0)";
-		this.textCanvasCtx.fillRect(
-			0,
-			0,
-			this.textCanvasCtx.canvas.width,
-			this.textCanvasCtx.canvas.height
-		);
 	}
 	updateSize() {
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -164,6 +138,14 @@ class Game {
 		var newobst = new Obstacle(this, x, y, z, this.obstacleIndex);
 		this.obstacleIndex += 1;
 		this.obstacles.push(newobst);
+	}
+	pause() {
+		this.paused = true;
+		document.getElementById("pauseMenu").style.display = "block";
+	}
+	unpause() {
+		this.paused = false;
+		document.getElementById("pauseMenu").style.display = "none";
 	}
 }
 
