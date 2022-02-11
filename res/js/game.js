@@ -107,7 +107,7 @@ class Game {
 		this.updateSize();
 		/* Update Entities */
 		if (this.gameLighting.light.intensity < 1) {
-			this.gameLighting.light.intensity += 0.002;
+			this.gameLighting.light.intensity += Math.floor(this.gameLighting.light.intensity * 0.1) ? Math.floor(this.gameLighting.light.intensity * 0.1) : 0.01;
 		}
 		this.updateObstacles();
 		this.player.update();
