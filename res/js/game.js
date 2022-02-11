@@ -43,7 +43,7 @@ class Game {
 
 		/* Obstacles */
 		this.obstacles = [];
-		this.obstacleMax = 20;
+		this.obstacleMax = 20 + Math.floor(this.bounds.left * 0.1);
 		this.obstacleIndex = 0;
 		this.obstacleSpeed = 0.2;
 		
@@ -124,10 +124,17 @@ class Game {
 			return;
 		}
 		if ((new Date).getTime() % 10 == 0) {
-			this.spawnObstacle();
+			var r = Math.floor(Math.random() * 10);
+			if (r > 5) {
+				this.spawnBasicObstacle();
+			} else {
+				this.spawnRotatingObstacle();
+			}
 		}
 	}
-	spawnObstacle() {
+	
+	// Obstacle Spawning
+	spawnBasicObstacle() {
 		var x = Math.floor(Math.random() * (this.bounds.left * 1));
 		// Make even values negative
 		if (x % 2 == 0) {
@@ -135,10 +142,25 @@ class Game {
 		}
 		var y = 0;
 		var z = 100;
-		var newobst = new Obstacle(this, x, y, z, this.obstacleIndex);
+		var newobst = new BasicObstacle(this, x, y, z, this.obstacleIndex);
 		this.obstacleIndex += 1;
 		this.obstacles.push(newobst);
 	}
+	
+	spawnRotatingObstacle() {
+		var x = Math.floor(Math.random() * (this.bounds.left * 1));
+		// Make even values negative
+		if (x % 2 == 0) {
+			x *= -1;
+		}
+		var y = 0;
+		var z = 100;
+		var newobst = new RotatingObstacle(this, x, y, z, this.obstacleIndex, 0.01, "y");
+		this.obstacleIndex += 1;
+		this.obstacles.push(newobst);
+	}
+	
+	// Pause and Unpause
 	pause() {
 		this.paused = true;
 		document.getElementById("pauseMenu").style.display = "block";
