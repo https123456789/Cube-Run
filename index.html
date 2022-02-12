@@ -2,7 +2,9 @@
 <html>
 	<head>
 		<title>Cube Run</title>
+		<link rel="icon" src="res/img/cube.png" sizes="any" type="image/png">
 		<link rel="stylesheet" href="res/css/fonts.css?rnd=1">
+		<link rel="stylesheet" href="res/css/classes.css?rnd=1">
 		<link rel="stylesheet" href="res/css/style.css?rnd=1">
 		<script>
 			VERSION = "0.1.0";
@@ -24,6 +26,13 @@
 		<div id="gameOver" class="contextMenu">
 			<h1>Game Over!</h1>
 		</div>
+		<div id="startMenu">
+			<h1>Cube Run</h1>
+			<h2 class="popout" id="startButton">Start</h2>
+			<h2 class="popout" id="creditsButton">Credits</h2>
+			<p>By: <a href="https://github.com/https123456789" target="_blank">https123456789 (Ben Landon)</a></p>
+		</div>
+		<iframe id="bg" src="logo.html"></iframe>
 		<script src="res/lib/three.js"></script>
 
 		<script src="res/js/lighting.js"></script>

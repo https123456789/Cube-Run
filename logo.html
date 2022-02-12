@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Cube Run Logo</title>
+		<style>
+			body {
+				margin: 0;
+				background-color: rgb(0, 0, 0);
+			}
+			#viewport {
+				width: 10vw;
+				height: 10vw;
+				background-color: rgb(255, 255, 255);
+			}
+		</style>
+	</head>
+	<body>
+		<div id="viewport"></div>
+		<script src="res/lib/three.js"></script>
+		<script>
+			const scene = new THREE.Scene();
+			const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+			const renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.getElementById("viewport").appendChild( renderer.domElement );
+			const geometry = new THREE.BoxGeometry();
+			const material1 = new THREE.MeshBasicMaterial({
+				color: "rgb(255, 0, 0)"
+			});
+			const material2 = new THREE.MeshBasicMaterial({
+				color: "rgb(255, 25, 0)"
+			});
+			const material3 = new THREE.MeshBasicMaterial({
+				color: "rgb(255, 50, 0)"
+			});
+			const cube = new THREE.Mesh( geometry, [
+				material1,
+				material1,
+				material2,
+				material2,
+				material3,
+				material3
+			]);
+			cube.rotation.y = (Math.PI / 180) * 45;
+			cube.rotation.x = (Math.PI / 180) * 25;
+			scene.add( cube );
+
+			var wireframe = new THREE.WireframeGeometry(geometry);
+			var lines = new THREE.LineSegments(wireframe);
+			lines.rotation.y = (Math.PI / 180) * 45;
+			lines.rotation.x = (Math.PI / 180) * 15;
+			//scene.add(lines);
+
+			camera.position.z = 2;
+			function animate() {
+				requestAnimationFrame( animate );
+				renderer.render( scene, camera );
+			}
+			animate();
+		</script>
+	</body>
+</html>

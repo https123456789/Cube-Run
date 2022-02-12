@@ -70,6 +70,9 @@ class Game {
 	}
 	start() {
 		this.levelStartTime = (new Date).getTime();
+		document.getElementById("info").style.top = 0;
+		document.getElementById("startMenu").style.display = "none";
+		document.getElementById("bg").style.display = "none";
 		this.updater = window.setInterval(() => {
 			this.update();
 		}, (1000/60));

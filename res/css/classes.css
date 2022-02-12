@@ -1,0 +1,18 @@
+.popout {
+	cursor: pointer;
+}
+.popout:hover {
+	transform: scale(1.2);
+}
+
+.contextMenu {
+	display: none;
+	position: fixed;
+	top: 10vh;
+	left: 10vw;
+	right: 10vw;
+	bottom: 10vh;
+	z-index: 1000;
+	background-color: rgb(255, 255, 255);
+	padding: 1%;
+}

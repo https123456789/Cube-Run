@@ -1,14 +1,26 @@
 body {
 	margin: 0;
 	padding: 0;
-	background-color: rgba(50, 50, 50, 1);
-	/*overflow-x: hidden;*/
-	font-family: ubuntu, courier new, verdana;
+	background-color: rgba(0, 0, 0, 1);
+	/*background-image: url("../img/cube.png");
+	background-repeat: no-repeat;
+	background-size: cover;*/
+	overflow-y: hidden;
+	font-family: ubuntu, monospace;
+}
+
+a {
+	color: rgb(255, 255, 255);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
 }
 
 #info {
 	position: fixed;
-	top: 0;
+	top: 100vh;
 	left: 0;
 	width: 100vw;
 	z-index: 100;
@@ -60,14 +72,55 @@ body {
 	color: rgb(255, 255, 255);
 }
 
-.contextMenu {
-	display: none;
+#startMenu {
+	display: grid;
+	grid-template-columns: auto;
+	grid-template-rows: auto auto auto auto;
 	position: fixed;
 	top: 10vh;
 	left: 10vw;
 	right: 10vw;
 	bottom: 10vh;
 	z-index: 1000;
+	background-color: rgba(255, 255, 255, 0);
+	text-align: center;
+	color: rgb(255, 255, 255);
+	height: 100vh;
+	/*border: 1px solid white;*/
+	line-height: 10vh;
+	/*overflow-y: auto;*/
+}
+
+#startMenu > * {
+	margin: 0;
+}
+
+#startMenu > h1 {
+	font-family: monospace;
+	font-size: 5em;
+}
+
+#startMenu > h2 {
+	
+}
+
+#bg {
+	width: 100vw;
+	height: 100vh;
+	border: none;
+}
+
+#creditsIframe {
+	display: block;
+	position: fixed;
+	top: 0vh;
+	left: 0vw;
+	right: 0vw;
+	bottom: 0vh;
+	width: 100vw;
+	height: 100vh;
+	z-index: 2000;
 	background-color: rgb(255, 255, 255);
-	padding: 1%;
+	padding: 0;
+	border: none;
 }
