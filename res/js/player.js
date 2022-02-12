@@ -57,6 +57,9 @@ class Player extends Entity {
 				this.keys.left = false;
 				break;
 			case 2:
+				if (!this.game.updater) {
+					break;
+				}
 				this.game.paused = !this.game.paused;
 				if (this.game.paused) {
 					document.getElementById("pauseMenu").style.display = "block";
