@@ -6,7 +6,8 @@ A simple game made with three.js.
 ### Controls:
 
 #### Default:
-- Left: a
-- Right: d
+- Left: `a`
+- Right: `d`
+- Pause: `p`
 
 Use the left and right movement keys to avoid the red cubes. Don't get hit.

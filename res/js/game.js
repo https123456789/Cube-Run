@@ -1,5 +1,9 @@
 class Game {
 	constructor() {
+		this.init();
+	}
+
+	init() {
 		/* Three.js Components */
 		this.scene = new THREE.Scene();
 		this.scene.background = new THREE.Color(0x000000);
@@ -68,6 +72,7 @@ class Game {
 			}
 		});
 	}
+						
 	start() {
 		this.levelStartTime = (new Date).getTime();
 		document.getElementById("info").style.top = 0;
@@ -76,6 +81,9 @@ class Game {
 		this.updater = window.setInterval(() => {
 			this.update();
 		}, (1000/60));
+	}
+	restart() {
+		// Reset game
 	}
 	die() {
 		document.getElementById("gameOver").style.display = "block";

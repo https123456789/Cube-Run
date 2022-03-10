@@ -10,7 +10,7 @@
 			#viewport {
 				width: 10vw;
 				height: 10vw;
-				background-color: rgb(255, 255, 255);
+				background-color: rgb(0, 0, 0);
 			}
 		</style>
 	</head>
@@ -51,12 +51,23 @@
 			lines.rotation.x = (Math.PI / 180) * 15;
 			//scene.add(lines);
 
+			var sdate = (new Date()).getTime();
+			var ndate = sdate;
+
 			camera.position.z = 2;
 			function animate() {
 				requestAnimationFrame( animate );
 				renderer.render( scene, camera );
 			}
 			animate();
+
+			window.setInterval(() => {
+				cube.rotation.y += (Math.PI / 180) * 1;
+			}, 10);
+
+			window.setInterval(() => {
+				//cube.rotation.x += (Math.PI / 180) * 5;
+			}, 1000);
 		</script>
 	</body>
 </html>
