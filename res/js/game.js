@@ -66,7 +66,7 @@ class Game {
 			}
 		};
 
-		document.addEventListener("visibilitychange", (event) => {
+		document.addEventListener("visibilitychange", () => {
 			if (document.hidden && this.updater) {
 				this.pause();
 			}

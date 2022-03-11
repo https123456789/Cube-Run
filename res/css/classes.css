@@ -1,5 +1,6 @@
 .popout {
 	cursor: pointer;
+	vertical-align: middle;
 }
 .popout:hover {
 	transform: scale(1.2);
@@ -15,4 +16,13 @@
 	z-index: 1000;
 	background-color: rgb(255, 255, 255);
 	padding: 1%;
+}
+
+.container-centered {
+	
+}
+
+.container-centered > * {
+	margin-left: auto;
+	margin-right: auto;
 }
