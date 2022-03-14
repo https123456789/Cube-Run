@@ -1,0 +1,82 @@
+body {
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+	text-align: center;
+}
+
+main {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow-y: auto;
+}
+
+h1 {
+	font-size: 4em;
+}
+h2 {
+	font-size: 3em;
+}
+
+a {
+	color: rgb(255, 255, 255);
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+p {
+	font-size: 1.25em;
+}
+
+.center {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.shrink {
+	animation-duration: 1s;
+	animation-name: slide;
+	animation-fill-mode: forwards;
+}
+.fade {
+	animation-duration: 1s;
+	animation-name: fade;
+	animation-fill-mode: forwards;
+}
+
+@keyframes slide {
+	from {
+		top: 0;
+	}
+	to {
+		top: 100vh;
+	}
+}
+@keyframes fade {
+	from {
+		opacity: 1;
+		/*background-color: rgb(0, 0, 0, 1);*/
+	}
+	to {
+		opacity: 0;
+		/*background-color: rgb(0, 0, 0, 0);*/
+	}
+}
+
+#close {
+	position: fixed;
+	top: 0;
+	right: 1vw;
+	border: none;
+	background-color: rgba(0, 0, 0, 0);
+	color: rgb(255, 255, 255);
+	font-size: 2em;
+}
+#close:hover {
+	transform: scale(1.2);
+}

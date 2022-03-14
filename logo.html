@@ -68,6 +68,12 @@
 			window.setInterval(() => {
 				//cube.rotation.x += (Math.PI / 180) * 5;
 			}, 1000);
+
+			window.onresize = () => {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize(window.innerWidth, window.innerHeight);
+			}
 		</script>
 	</body>
 </html>

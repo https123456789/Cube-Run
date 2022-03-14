@@ -2,84 +2,11 @@
 <html>
 	<head>
 		<title>Cube Run Help</title>
-		<style>
-			body {
-				background-color: rgb(0, 0, 0);
-				color: rgb(255, 255, 255);
-			}
-			.center {
-				text-align: center;
-				margin-left: auto;
-				margin-right: auto;
-			}
-			h1 {
-				font-size: 5em;
-			}
-			h2 {
-				font-size: 4em;
-			}
-			a {
-				color: rgb(255, 255, 255);
-				text-decoration: none;
-			}
-			a:hover {
-				text-decoration: underline;
-			}
-			#close {
-				position: fixed;
-				top: 0;
-				right: 1vw;
-				border: none;
-				background-color: rgba(0, 0, 0, 0);
-				color: rgb(255, 255, 255);
-				font-size: 2em;
-				z-index: 2;
-			}
-			#close:hover {
-				transform: scale(1.2);
-			}
-			.shrink {
-				animation-duration: 1s;
-				animation-name: slide;
-				animation-fill-mode: forwards;
-			}
-			.fade {
-				animation-duration: 1s;
-				animation-name: fade;
-				animation-fill-mode: forwards;
-			}
-			main {
-				position: fixed;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-			}
-			@keyframes slide {
-				from {
-					top: 0;
-				}
-				to {
-					top: 100vh;
-				}
-			}
-			@keyframes fade {
-				from {
-					opacity: 1;
-					/*background-color: rgb(0, 0, 0, 1);*/
-				}
-				to {
-					opacity: 0;
-					/*background-color: rgb(0, 0, 0, 0);*/
-				}
-			} p {
-				font-size: 1.25em;
-			}
-		</style>
+		<link rel="stylesheet" href="res/css/views/main.css?rnd=1">
 	</head>
 	<body>
-		<button onclick="done()" id="close">Back</button>
 		<main>
+			<button onclick="done()" id="close">Back</button>
 			<h1 class="center">Help</h1>
 			<h2 class="center">Controls</h2>
 			<p class="center" style="">To go left, press <code id="leftKey"></code>.</p>
@@ -93,7 +20,7 @@
 				document.getElementById("close").classList.add("shrink");
 				document.body.classList.add("fade");
 				window.setTimeout(() => {
-					window.top.postMessage("helpEnded", "*");
+					window.parent.postMessage("helpEnded", "*");
 				}, 1);
 			}
 

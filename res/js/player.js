@@ -69,7 +69,7 @@ class Player extends Entity {
 				break;
 		}
 	}
-	keyupEvent(evnet) {
+	keyupEvent(event) {
 		var key = event.key;
 		var action = this.checkKeyAction(key);
 		if (action < 0) {
@@ -85,6 +85,7 @@ class Player extends Entity {
 		}
 	}
 	checkKeyAction(key) {
+		console.log(window.gamedata.keybindings);
 		if (key == window.gamedata.keybindings.selections[window.gamedata.keybindings.selection].left) {
 			return 0;
 		} else if (key == window.gamedata.keybindings.selections[window.gamedata.keybindings.selection].right) {

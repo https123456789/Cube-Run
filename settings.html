@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Settings</title>
+		<link rel="stylesheet" href="res/css/views/main.css?rnd=1">
+		<style>
+			.container {
+				display: flex;
+				flex: 1;
+			}
+			.container > * {
+				margin-right: auto;
+			}
+			.container > *:first-child {
+				margin-left: auto;
+			}
+			input {
+				text-align: center;
+				border: 1px solid rgb(255, 255, 255);
+				background-color: rgba(0, 0, 0, 0);
+				color: rgb(255, 255, 255);
+				outline: none;
+			}
+			input:focus {
+				outline: none;
+			}
+			.saveBtn {
+				background-color: rgba(0, 0, 0, 0);
+				color: rgb(255, 255, 255);
+				border: 1px solid rgb(255, 255, 255);
+				padding: 1%;
+			}
+			.saveBtn:hover {
+				background-color: rgba(255, 255, 255, 0.1);
+			}
+			.saved {
+				animation-name: saved;
+				animation-duration: 2s;
+			}
+			@keyframes saved {
+				0% {
+					background-color: rgba(0, 0, 0, 0);
+				}
+				50% {
+					background-color: rgba(0, 255, 0, 0.75);
+				}
+				100% {
+					background-color: rgba(0, 0, 0, 0);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<h1 class="center">Settings</h1>
+			<h2 class="center">Keybindings</h2>
+			<div class="container">
+				<div>
+					<p>Left</p>
+					<input maxlength="1" id="leftKeybindingInput" type="text" value="Loading...">
+				</div>
+				<div>
+					<p>Right</p>
+					<input maxlength="1" id="rightKeybindingInput" type="text" value="Loading...">
+				</div>
+			</div>
+			<div class="container">
+				<button class="saveBtn" onclick="save()">Save</button>
+			</div>
+			<button id="close" onclick="done()">Back</button>
+		</main>
+		<script>
+			function done() {
+				document.getElementsByTagName("main")[0].classList.add("shrink");
+				document.getElementById("close").classList.add("shrink");
+				document.body.classList.add("fade");
+				window.setTimeout(() => {
+					window.parent.postMessage("settingsEnded", "*");
+				}, 1);
+			}
+
+			function save() {
+				saveKeybinding("left", leftKeybindingInput.value);
+				saveKeybinding("right", rightKeybindingInput.value);
+				var saveButtons = document.getElementsByClassName("saveBtn");
+				for (var i = 0; i < saveButtons.length; i++) {
+					var element = saveButtons[i];
+					element.classList.add("saved");
+					window.setTimeout(() => {
+						element.classList.remove("saved");
+					}, 2000);
+				}
+			}
+
+			var leftKeybindingInput = document.getElementById("leftKeybindingInput");
+			var rightKeybindingInput = document.getElementById("rightKeybindingInput");
+
+			leftKeybindingInput.value = window.parent.gamedata.keybindings.selections[window.parent.gamedata.keybindings.selection].left;
+			rightKeybindingInput.value = window.parent.gamedata.keybindings.selections[window.parent.gamedata.keybindings.selection].right;
+
+			function saveKeybinding(key, value) {
+				window.parent.gamedata
+					.keybindings
+					.selections[
+						window.parent
+							.gamedata
+							.keybindings
+							.selection
+					][key] = value;
+				window.parent
+					.localStorage.setItem(
+						"keybindings",
+						JSON.stringify
+						(
+							window.parent
+						 		.gamedata.keybindings
+						)
+					);
+			}
+		</script>
+	</body>
+</html>

@@ -52,19 +52,32 @@ class Game {
 		this.obstacleSpeed = 0.2;
 		
 		this.updater = null;
-		/* Set Default Key Bindings */
-		window.gamedata = {
-			keybindings: {
-				selection: "default",
-				selections: {
-					default: {
-						left: "a",
-						right: "d",
-						pause: "p"
+		/* Initalize Key Bindings */
+		if (!localStorage.getItem("keybindings")) {
+			console.log("No localStorage keybindings");
+			window.gamedata = {
+				keybindings: {
+					selection: "default",
+					selections: {
+						default: {
+							left: "a",
+							right: "d",
+							pause: "p"
+						}
 					}
 				}
-			}
-		};
+			};
+			localStorage.setItem("keybindings", JSON.stringify(window.gamedata.keybindings));
+		} else {
+			window.gamedata = {
+				keybindings: {
+					
+				}
+			};
+			window.gamedata.keybindings = JSON.parse(localStorage.getItem("keybindings"));
+		}
+
+		console.log(window.gamedata);
 
 		document.addEventListener("visibilitychange", () => {
 			if (document.hidden && this.updater) {
@@ -72,7 +85,6 @@ class Game {
 			}
 		});
 	}
-						
 	start() {
 		this.levelStartTime = (new Date).getTime();
 		document.getElementById("info").style.top = 0;

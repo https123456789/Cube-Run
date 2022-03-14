@@ -4,6 +4,7 @@ var game = new Game();
 var startButton = document.getElementById("startButton");
 var helpButton = document.getElementById("helpButton");
 var creditsButton = document.getElementById("creditsButton");
+var settingsButton = document.getElementById("settingsButton");
 var loadingDiv = document.getElementById("loadingDiv");
 
 startButton.onclick = () => {
@@ -42,6 +43,17 @@ creditsButton.onclick = () => {
 	rollCredits();
 };
 
+settingsButton.onclick = () => {
+	var el = document.createElement("iframe");
+	el.id = "settingsIframe";
+	el.src = "settings.html";
+	el.classList.add("iframeWindow");
+	document.body.appendChild(el);
+	el.onload = () => {
+		el.classList.add("slide-up");
+	}
+}
+
 function rollCredits() {
 	var el = document.createElement("iframe");
 	el.src = "credits.html";
@@ -68,6 +80,12 @@ window.onmessage = (event) => {
 			window.setTimeout(() => {
 				document.body.removeChild(
 					document.getElementById("helpIframe")
+				);
+			}, 1000);
+		case "settingsEnded":
+			window.setTimeout(() => {
+				document.body.removeChild(
+					document.getElementById("settingsIframe")
 				);
 			}, 1000);
 	}

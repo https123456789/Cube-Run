@@ -18,10 +18,11 @@
 	padding: 1%;
 }
 
+/*
 .container-centered {
 	
 }
-
+*/
 .container-centered > * {
 	margin-left: auto;
 	margin-right: auto;
@@ -40,4 +41,5 @@
 	background-color: rgb(255, 255, 255);
 	padding: 0;
 	border: none;
+	overflow-x: hidden;
 }
