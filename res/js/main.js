@@ -21,8 +21,21 @@ startButton.onclick = () => {
 	startButton.classList.add("fade");
 	creditsButton.classList.add("fade");
 	helpButton.classList.add("fade");
+	settingsButton.classList.add("fade");
 	loadingDiv.classList.add("fade-in");
-	//startButton.classList.add("spin-dont-save");
+	//startButton.classList.add("spin-dont-[save");
+	var menuHiderUpdater = window.setTimeout(() => {
+		console.log("update");
+		if (!game.updater) {
+			return;
+		}
+		startButton.classList.remove("fade");
+		creditsButton.classList.remove("fade");
+		helpButton.classList.remove("fade");
+		settingsButton.classList.remove("fade");
+		alert("clearing");
+		window.clearTimeout(menuHiderUpdater);
+	}, 500);
 };
 
 helpButton.onclick = () => {

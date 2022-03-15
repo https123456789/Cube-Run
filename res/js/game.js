@@ -1,9 +1,16 @@
+/* exported Game */
 class Game {
 	constructor() {
+		/* Init events */
+		this.startEvent = new CustomEvent("start", {
+			detail: {
+				
+			}
+		})
+		this.threeInit();
 		this.init();
 	}
-
-	init() {
+	threeInit() {
 		/* Three.js Components */
 		this.scene = new THREE.Scene();
 		this.scene.background = new THREE.Color(0x000000);
@@ -24,6 +31,8 @@ class Game {
 		this.renderer.shadowMap.enabled = true;
 		this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 		document.body.appendChild(this.renderer.domElement);
+	}
+	init() {
 		/* Game Components */
 		this.bounds = {
 			left: 50,
@@ -93,6 +102,8 @@ class Game {
 		this.updater = window.setInterval(() => {
 			this.update();
 		}, (1000/60));
+		// Dispatch start event
+		window.dispatchEvent(this.startEvent);
 	}
 	restart() {
 		// Reset game

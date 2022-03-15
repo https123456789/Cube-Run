@@ -7,12 +7,17 @@
 			.container {
 				display: flex;
 				flex: 1;
+				margin-bottom: 1%;
 			}
 			.container > * {
-				margin-right: auto;
+				margin-left: 1%;
+				margin-right: 1%;
 			}
 			.container > *:first-child {
 				margin-left: auto;
+			}
+			.container > *:last-child {
+				margin-right: auto;
 			}
 			input {
 				text-align: center;
@@ -54,14 +59,21 @@
 		<main>
 			<h1 class="center">Settings</h1>
 			<h2 class="center">Keybindings</h2>
+			<p>To set the keybindings for arrow keys, type the name listed below.</p>
+			<div class="container">
+				<p>Left Arrow Key: <code>ArrowLeft</code></p>
+				<p>Right Arrow Key: <code>ArrowRight</code></p>
+				<p>Up Arrow Key: <code>ArrowUp</code></p>
+				<p>Down Arrow Key: <code>ArrowDown</code></p>
+			</div>
 			<div class="container">
 				<div>
 					<p>Left</p>
-					<input maxlength="1" id="leftKeybindingInput" type="text" value="Loading...">
+					<input id="leftKeybindingInput" type="text" value="Loading..." autocomplete="off">
 				</div>
 				<div>
 					<p>Right</p>
-					<input maxlength="1" id="rightKeybindingInput" type="text" value="Loading...">
+					<input id="rightKeybindingInput" type="text" value="Loading..." autocomplete="off">
 				</div>
 			</div>
 			<div class="container">
