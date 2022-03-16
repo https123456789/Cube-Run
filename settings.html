@@ -19,6 +19,12 @@
 			.container > *:last-child {
 				margin-right: auto;
 			}
+			.wrapper {
+				/*border: 1px solid rgb(255, 255, 255);*/
+				border-radius: 15px;
+				margin-bottom: 1%;
+				padding: 1%;
+			}
 			input {
 				text-align: center;
 				border: 1px solid rgb(255, 255, 255);
@@ -53,12 +59,50 @@
 					background-color: rgba(0, 0, 0, 0);
 				}
 			}
+			#keybindings {
+				width: 60vw;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			#keybindingsSelection {
+				display: flex;
+				flex: 1;
+			}
+			.keybindingSelection {
+				border: 1px solid rgb(255, 255, 255);
+				border-radius: 15px;
+				background-color: rgba(0, 0, 0, 0.1);
+				color: rgb(255, 255, 255);
+				padding: 1%;
+				font-size: 1em;
+				margin-left: 1%;
+				margin-right: 1%;
+			}
+			.keybindingSelection:first-child {
+				margin-left: auto;
+			}
+			.keybindingSelection:last-child {
+				margin-right: auto;
+			}
+			.keybindingSelection:hover {
+				background-color: rgba(255, 255, 255, 0.1);
+			}
+			.keybindingSelection-active {
+				background-color: rgba(0, 255, 0, 0.1);
+			}
+			.keybindingSelection-active:hover {
+				background-color: rgba(0, 255, 0, 0.2);
+			}
 		</style>
 	</head>
 	<body>
 		<main>
 			<h1 class="center">Settings</h1>
 			<h2 class="center">Keybindings</h2>
+			<p>Click on the name to select that keybinding.</p>
+			<div id="keybindingsSelection">
+				
+			</div>
 			<p>To set the keybindings for arrow keys, type the name listed below.</p>
 			<div class="container">
 				<p>Left Arrow Key: <code>ArrowLeft</code></p>
@@ -66,18 +110,8 @@
 				<p>Up Arrow Key: <code>ArrowUp</code></p>
 				<p>Down Arrow Key: <code>ArrowDown</code></p>
 			</div>
-			<div class="container">
-				<div>
-					<p>Left</p>
-					<input id="leftKeybindingInput" type="text" value="Loading..." autocomplete="off">
-				</div>
-				<div>
-					<p>Right</p>
-					<input id="rightKeybindingInput" type="text" value="Loading..." autocomplete="off">
-				</div>
-			</div>
-			<div class="container">
-				<button class="saveBtn" onclick="save()">Save</button>
+			<div id="keybindings">
+				
 			</div>
 			<button id="close" onclick="done()">Back</button>
 		</main>
@@ -92,33 +126,132 @@
 			}
 
 			function save() {
-				saveKeybinding("left", leftKeybindingInput.value);
-				saveKeybinding("right", rightKeybindingInput.value);
+				var kkeys = Object.keys(window.parent.gamedata.keybindings.selections);
+				for (var i = 0; i < kkeys.length; i++) {
+					var id = "leftKeybinding-" + i;
+					saveKeybinding(
+						"left",
+						kkeys[i],
+						document.getElementById(id).value
+					);
+					id = "rightKeybinding-" + i
+					saveKeybinding(
+						"right",
+						kkeys[i],
+						document.getElementById(id).value
+					);
+				}
+				//saveKeybinding("left", leftKeybindingInput.value);
+				//saveKeybinding("right", rightKeybindingInput.value);
 				var saveButtons = document.getElementsByClassName("saveBtn");
 				for (var i = 0; i < saveButtons.length; i++) {
 					var element = saveButtons[i];
 					element.classList.add("saved");
-					window.setTimeout(() => {
+					element.style.pointerEvents = "none";
+				}
+				window.setTimeout(() => {
+					var saveButtons = document.getElementsByClassName("saveBtn");
+					for (var i = 0; i < saveButtons.length; i++) {
+						var element = saveButtons[i];
 						element.classList.remove("saved");
-					}, 2000);
+						element.style.pointerEvents = "auto";
+					}
+				}, 2000);
+			}
+
+			//var leftKeybindingInput = document.getElementById("leftKeybindingInput");
+			//var rightKeybindingInput = document.getElementById("rightKeybindingInput");
+
+			//leftKeybindingInput.value = window.parent.gamedata.keybindings.selections[window.parent.gamedata.keybindings.selection].left;
+			//rightKeybindingInput.value = window.parent.gamedata.keybindings.selections[window.parent.gamedata.keybindings.selection].right;
+
+			function loadKeybindings() {
+				var top = document.getElementById("keybindings");
+				var kkeys = Object.keys(window.parent.gamedata.keybindings.selections);
+				for (var i = 0; i < kkeys.length; i++) {
+					var wrapper = document.createElement("div");
+					wrapper.classList.add("wrapper");
+					var label = document.createElement("p");
+					label.innerHTML = kkeys[i];
+					wrapper.appendChild(label);
+			
+					var l1 = document.createElement("div");
+					l1.classList.add("container");
+					var l1i1 = document.createElement("div");
+
+					var l2i1 = document.createElement("p");
+					l2i1.innerHTML = "Left";
+					var l2i2 = document.createElement("input");
+					l2i2.autocomplete = "off";
+					l2i2.value = window.parent.gamedata.keybindings.selections[kkeys[i]].left;
+					l2i2.type = "text";
+					l2i2.id = "leftKeybinding-" + i;
+					
+					l1i1.appendChild(l2i1);
+					l1i1.appendChild(l2i2);
+					
+					var l1i2 = document.createElement("div");
+
+					var l3i1 = document.createElement("p");
+					l3i1.innerHTML = "Right";
+					var l3i2 = document.createElement("input");
+					l3i2.autocomplete = "off";
+					l3i2.value = window.parent.gamedata.keybindings.selections[kkeys[i]].right;
+					l3i2.type = "text";
+					l3i2.id = "rightKeybinding-" + i;
+
+					l1i2.appendChild(l3i1);
+					l1i2.appendChild(l3i2);
+					
+					l1.appendChild(l1i1);
+					l1.appendChild(l1i2);
+					wrapper.appendChild(l1);
+
+					var sbtn = document.createElement("button");
+					sbtn.onclick = () => {
+						save();
+					};
+					sbtn.classList.add("saveBtn");
+					sbtn.innerHTML = "Save";
+					wrapper.appendChild(sbtn);
+					top.appendChild(wrapper);
 				}
 			}
 
-			var leftKeybindingInput = document.getElementById("leftKeybindingInput");
-			var rightKeybindingInput = document.getElementById("rightKeybindingInput");
+			function loadKeybindingSelections() {
+				var dom = document.getElementById("keybindingsSelection");
+				var kkeys = Object.keys(window.parent.gamedata.keybindings.selections);
+				for (var i = 0; i < kkeys.length; i++) {
+					var nel = `<button id="setKeybindingSelection-${i}" class="keybindingSelection ${((kkeys[i] == window.parent.gamedata.keybindings.selection) ? "keybindingSelection-active" : "")}" onclick="setKeybingingSelection(${i})">${kkeys[i]}</button>`;
+					dom.innerHTML += nel;
+				}
+			}
 
-			leftKeybindingInput.value = window.parent.gamedata.keybindings.selections[window.parent.gamedata.keybindings.selection].left;
-			rightKeybindingInput.value = window.parent.gamedata.keybindings.selections[window.parent.gamedata.keybindings.selection].right;
-
-			function saveKeybinding(key, value) {
+			function setKeybingingSelection(i) {
 				window.parent.gamedata
 					.keybindings
-					.selections[
-						window.parent
-							.gamedata
-							.keybindings
-							.selection
-					][key] = value;
+					.selection = Object.keys(window.parent.gamedata
+					.keybindings
+					.selections)[i];
+				var keys = Object.keys(
+					window.parent.gamedata
+						.keybindings
+						.selections
+				);
+				for (var q = 0; q < keys.length; q++) {
+					var el = 
+ document.getElementById("setKeybindingSelection-" + q);
+					el.classList.remove("keybindingSelection-active");
+					if (q == i) {
+						el.classList.add("keybindingSelection-active");
+					}
+				}
+			}
+
+			function saveKeybinding(key, selectionName, value) {
+				window.parent.gamedata
+					.keybindings
+					.selections[selectionName][key] = value;
 				window.parent
 					.localStorage.setItem(
 						"keybindings",
@@ -128,6 +261,11 @@
 						 		.gamedata.keybindings
 						)
 					);
+			}
+
+			window.onload = () => {
+				loadKeybindings();
+				loadKeybindingSelections();
 			}
 		</script>
 	</body>

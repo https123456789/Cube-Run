@@ -72,6 +72,11 @@ class Game {
 							left: "a",
 							right: "d",
 							pause: "p"
+						},
+						arrows: {
+							left: "ArrowLeft",
+							right: "ArrowRight",
+							pause: "p"
 						}
 					}
 				}
