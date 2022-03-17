@@ -14,9 +14,15 @@
 	</head>
 	<body>
 		<div id="info">
-			<p style="text-align: center; grid-column: 1 / 5;">Level <span id="levelDisplay">Loading...</span></p>
+			<!-- Row 1 -->
+			<p></p>
+			<p style="text-align: center;">Level <span id="levelDisplay">Loading...</span></p>
+			<p style="text-align: center;">Score: <span id="scoreDisplay">Loading...</span></p>
+			<p></p>
+			<!-- Row 2 -->
 			<p>Obstacle Max: <span id="obstmax">Loading...</span></p>
-			<p style="grid-column: 2/4;"></p>
+			<p></p>
+			<p></p>
 			<p style="text-align: right;"><span class="javascript-version-label">Loading...</span></p>
 		</div>
 		<div id="pauseMenu" class="contextMenu">
@@ -46,7 +52,7 @@
 		<div id="loadingDiv">
 			<p>Avoid red cubes.</p>
 		</div>
-		<iframe id="bg" src="logo.html"></iframe>
+		<iframe id="bg" data-src="logo.html"></iframe>
 		<script src="res/lib/three.js"></script>
 		<script src="res/js/lighting.js"></script>
 		<script src="res/js/entity.js"></script>

@@ -14,18 +14,26 @@ class Player extends Entity {
 			this.keyupEvent(event);
 		});
 		this.speed = 0.1;
+		this.score = 0;
+		this.scoreFactor = 0.1;
+		this.distanceTraveled = 0;
 	}
 	update() {
+		// Update distance traveled
+		this.distanceTraveled += this.game.obstacleSpeed;
+		// Left movement
 		if (this.keys.left) {
 			this.cube.position.x += this.speed;
 			this.game.camera.position.x += this.speed;
 			this.game.gameLighting.light.position.x += this.speed;
 		}
+		// Right movement
 		if (this.keys.right) {
 			this.cube.position.x -= this.speed;
 			this.game.camera.position.x -= this.speed;
 			this.game.gameLighting.light.position.x -= this.speed;
 		}
+		// Keep player in world bounds
 		if (this.cube.position.x < this.game.bounds.right) {
 			this.cube.position.x = this.game.bounds.right;
 			this.game.camera.position.x = this.game.bounds.right;
@@ -85,7 +93,7 @@ class Player extends Entity {
 		}
 	}
 	checkKeyAction(key) {
-		console.log(window.gamedata.keybindings);
+		//console.log(window.gamedata.keybindings);
 		if (key == window.gamedata.keybindings.selections[window.gamedata.keybindings.selection].left) {
 			return 0;
 		} else if (key == window.gamedata.keybindings.selections[window.gamedata.keybindings.selection].right) {

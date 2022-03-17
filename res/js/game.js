@@ -47,6 +47,7 @@ class Game {
 		//this.movingSpotLight = new MovingSpotLight(this);
 
 		this.paused = false;
+		this.gameStartTime = null;
 
 		/* Levels */
 		this.level = 1;
@@ -100,7 +101,8 @@ class Game {
 		});
 	}
 	start() {
-		this.levelStartTime = (new Date).getTime();
+		this.gameStartTime = (new Date()).getTime();
+		this.levelStartTime = this.gameStartTime;
 		document.getElementById("info").style.top = 0;
 		document.getElementById("startMenu").style.display = "none";
 		document.getElementById("bg").style.display = "none";
@@ -135,8 +137,14 @@ class Game {
 			this.obstacleSpeed += 0.01;
 			this.levelChanged = false;
 		}
+		/* Update score */
+		this.player.score = Math.floor((this.player.scoreFactor * this.player.distanceTraveled) * 100) / 100;
+		
 		/* Update Labels */
 		document.getElementById("levelDisplay").innerHTML = this.level;
+		if ((now % 10) == 0) {
+			document.getElementById("scoreDisplay").innerHTML = Math.floor(this.player.score);
+		}
 		var els = document.getElementsByClassName("javascript-version-label");
 		for (var i = 0; i < els.length; i++) {
 			els[i].innerHTML = "v" + VERSION + " " + VERSION_SUFFIX;
