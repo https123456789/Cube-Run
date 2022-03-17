@@ -143,7 +143,10 @@ class Game {
 		/* Update Labels */
 		document.getElementById("levelDisplay").innerHTML = this.level;
 		if ((now % 10) == 0) {
-			document.getElementById("scoreDisplay").innerHTML = Math.floor(this.player.score);
+			var els = document.getElementsByClassName("javascript-score-label");
+			for (var i = 0; i < els.length; i++) {
+				els[i].innerHTML = Math.floor(this.player.score).toLocaleString();
+			}
 		}
 		var els = document.getElementsByClassName("javascript-version-label");
 		for (var i = 0; i < els.length; i++) {

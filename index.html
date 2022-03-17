@@ -17,7 +17,7 @@
 			<!-- Row 1 -->
 			<p></p>
 			<p style="text-align: center;">Level <span id="levelDisplay">Loading...</span></p>
-			<p style="text-align: center;">Score: <span id="scoreDisplay">Loading...</span></p>
+			<p style="text-align: center;">Score: <span class="javascript-score-label">Loading...</span></p>
 			<p></p>
 			<!-- Row 2 -->
 			<p>Obstacle Max: <span id="obstmax">Loading...</span></p>
@@ -27,7 +27,8 @@
 		</div>
 		<div id="pauseMenu" class="contextMenu">
 			<button onclick="game.unpause()" id="unpauseBtn">X</button>
-			<p style="text-align: center;">Game Is Paused</p>
+			<p style="text-align: center; font-weight: bold; font-size: 1.25em;">Game Is Paused</p>
+			<p stlye="text-align: center;">Score: <span class="javascript-score-label" style="font-weight: bold;">Loading...</span></p>
 			<p>Version: <span class="javascript-version-label">Loading...</span></p>
 		</div>
 		<div id="gameOver" class="contextMenu">
