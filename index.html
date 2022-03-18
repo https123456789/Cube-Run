@@ -2,30 +2,72 @@
 <html>
 	<head>
 		<title>Cube Run</title>
+		<link rel="shortcut-icon" src="res/img/cube.png" sizes="any" type="image/png">
 		<link rel="stylesheet" href="res/css/fonts.css?rnd=1">
+		<link rel="stylesheet" href="res/css/classes.css?rnd=1">
 		<link rel="stylesheet" href="res/css/style.css?rnd=1">
+		<link rel="stylesheet" href="res/css/animations.css?rnd=1">
 		<script>
-			VERSION = "0.1.0";
+			VERSION = "0.2.0";
 			VERSION_SUFFIX = "(beta)";
 		</script>
 	</head>
 	<body>
 		<div id="info">
-			<p style="text-align: center; grid-column: 1 / 5;">Level <span id="levelDisplay">Loading...</span></p>
+			<!-- Row 1 -->
+			<p></p>
+			<p style="text-align: center;">Level <span id="levelDisplay">Loading...</span></p>
+			<p style="text-align: center;">Score: <span class="javascript-score-label">Loading...</span></p>
+			<p></p>
+			<!-- Row 2 -->
 			<p>Obstacle Max: <span id="obstmax">Loading...</span></p>
-			<p style="grid-column: 2/4;"></p>
+			<p></p>
+			<p></p>
 			<p style="text-align: right;"><span class="javascript-version-label">Loading...</span></p>
 		</div>
 		<div id="pauseMenu" class="contextMenu">
 			<button onclick="game.unpause()" id="unpauseBtn">X</button>
-			<p style="text-align: center;">Game Is Paused</p>
+			<p style="text-align: center; font-weight: bold; font-size: 1.25em;">Game Is Paused</p>
+			<p stlye="text-align: center;">Score: <span class="javascript-score-label" style="font-weight: bold;">Loading...</span></p>
 			<p>Version: <span class="javascript-version-label">Loading...</span></p>
 		</div>
 		<div id="gameOver" class="contextMenu">
 			<h1>Game Over!</h1>
 		</div>
+		<div id="startMenu">
+			<h1 style="pointer-events: none;">Cube Run</h1>
+			<div class="col container-centered">
+				<div class="row">
+					<div class="container-centered">
+						<h2 class="popout" id="startButton" style="width: fit-content; min-width: 10vw;">Start</h2>
+					</div>
+				</div>
+				<div class="row container-centered">
+					<div class="container-centered">
+						<h2 class="popout" id="settingsButton" style="width: fit-content; min-width: 10vw;">Settings</h2>
+					</div>
+					<div class="container-centered">
+						<h2 class="popout" id="statsButton" style="width: fit-content; min-width: 10vw;">Stats</h2>
+					</div>
+				</div>
+				<div class="row container-centered">
+					<div class="container-centered">
+						<h2 class="popout" id="helpButton" style="width: fit-content; min-width: 10vw;">Help</h2>
+					</div>
+				</div>
+				<div class="row container-centered">
+					<div class="container-centered">
+						<h2 class="popout" id="creditsButton" style="width: fit-content; min-width: 10vw;">Credits</h2>
+					</div>
+				</div>
+			</div>
+			<p class="vertical-align: bottom;">By: <a href="https://github.com/https123456789" target="_blank">https123456789 (Ben Landon)</a></p>
+		</div>
+		<div id="loadingDiv">
+			<p>Avoid red cubes.</p>
+		</div>
+		<iframe id="bg" data-src="logo.html"></iframe>
 		<script src="res/lib/three.js"></script>
-
 		<script src="res/js/lighting.js"></script>
 		<script src="res/js/entity.js"></script>
 		<script src="res/js/obstacle.js"></script>

@@ -1,5 +1,15 @@
 class Game {
 	constructor() {
+		/* Init events */
+		this.startEvent = new CustomEvent("start", {
+			detail: {
+				
+			}
+		})
+		this.threeInit();
+		this.init();
+	}
+	threeInit() {
 		/* Three.js Components */
 		this.scene = new THREE.Scene();
 		this.scene.background = new THREE.Color(0x000000);
@@ -20,6 +30,8 @@ class Game {
 		this.renderer.shadowMap.enabled = true;
 		this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 		document.body.appendChild(this.renderer.domElement);
+	}
+	init() {
 		/* Game Components */
 		this.bounds = {
 			left: 50,
@@ -34,6 +46,8 @@ class Game {
 		//this.movingSpotLight = new MovingSpotLight(this);
 
 		this.paused = false;
+		this.gameStartTime = null;
+		this.dead = false;
 
 		/* Levels */
 		this.level = 1;
@@ -48,43 +62,92 @@ class Game {
 		this.obstacleSpeed = 0.2;
 		
 		this.updater = null;
-		/* Set Default Key Bindings */
-		window.gamedata = {
-			keybindings: {
-				selection: "default",
-				selections: {
-					default: {
-						left: "a",
-						right: "d",
-						pause: "p"
+		/* Initalize Key Bindings */
+		if (!localStorage.getItem("keybindings")) {
+			console.log("No localStorage keybindings");
+			window.gamedata = {
+				keybindings: {
+					selection: "default",
+					selections: {
+						default: {
+							left: "a",
+							right: "d",
+							pause: "p"
+						},
+						arrows: {
+							left: "ArrowLeft",
+							right: "ArrowRight",
+							pause: "p"
+						}
 					}
 				}
-			}
-		};
+			};
+			localStorage.setItem("keybindings", JSON.stringify(window.gamedata.keybindings));
+		} else {
+			window.gamedata = {
+				keybindings: {
+					
+				}
+			};
+			window.gamedata.keybindings = JSON.parse(localStorage.getItem("keybindings"));
+		}
 
-		document.addEventListener("visibilitychange", (event) => {
+		/* Initalize stats */
+		if (!localStorage.getItem("stats")) {
+			console.log("No localStorage stats");
+			window.gamedata.stats = {
+				player: {
+					highscore: 0,
+					totalDeaths: 0
+				}
+			}
+			localStorage.setItem("stats", JSON.stringify(window.gamedata.stats));
+		} else {
+			window.gamedata.stats = JSON.parse(localStorage.getItem("stats"));
+		}
+
+		console.log(window.gamedata);
+
+		document.addEventListener("visibilitychange", () => {
 			if (document.hidden && this.updater) {
 				this.pause();
 			}
 		});
 	}
 	start() {
-		this.levelStartTime = (new Date).getTime();
+		this.gameStartTime = (new Date()).getTime();
+		this.levelStartTime = this.gameStartTime;
+		document.getElementById("info").style.top = 0;
+		document.getElementById("startMenu").style.display = "none";
+		document.getElementById("bg").style.display = "none";
 		this.updater = window.setInterval(() => {
 			this.update();
 		}, (1000/60));
+		// Dispatch start event
+		window.dispatchEvent(this.startEvent);
+	}
+	restart() {
+		// Reset game
 	}
 	die() {
+		this.dead = true;
+		console.log("game ended.");
+		// Save game data
+		this.updateStats();
+		// End Game
 		document.getElementById("gameOver").style.display = "block";
 		window.clearInterval(this.updater);
 		this.updater = null;
 	}
 	update() {
+		var now = (new Date).getTime();
+		if (now % 100 == 0) {
+			this.updateStats();
+		}
 		if (this.paused) {
 			return;
 		}
 		/* Game level update */
-		var now = (new Date).getTime();
 		if (now - this.levelStartTime >= this.levelTimeSwitch) {
 			this.level += 1;
 			this.levelStartTime = now;
@@ -96,8 +159,20 @@ class Game {
 			this.obstacleSpeed += 0.01;
 			this.levelChanged = false;
 		}
+		/* Update score */
+		this.player.score = Math.floor((this.player.scoreFactor * this.player.distanceTraveled) * 100) / 100;
+		if (this.player.score > window.gamedata.stats.player.highscore) {
+			window.gamedata.stats.player.highscore = this.player.score;
+		}
+		
 		/* Update Labels */
 		document.getElementById("levelDisplay").innerHTML = this.level;
+		if ((now % 10) == 0) {
+			var els = document.getElementsByClassName("javascript-score-label");
+			for (var i = 0; i < els.length; i++) {
+				els[i].innerHTML = Math.floor(this.player.score).toLocaleString();
+			}
+		}
 		var els = document.getElementsByClassName("javascript-version-label");
 		for (var i = 0; i < els.length; i++) {
 			els[i].innerHTML = "v" + VERSION + " " + VERSION_SUFFIX;
@@ -113,6 +188,11 @@ class Game {
 		this.player.update();
 		/* Render */
 		this.renderer.render(this.scene, this.camera);
+	}
+	updateStats() {
+		// Save
+		localStorage.setItem("stats", JSON.stringify(window.gamedata.stats));
+		console.log("Updated game stats.");
 	}
 	updateSize() {
 		this.renderer.setSize(window.innerWidth, window.innerHeight);

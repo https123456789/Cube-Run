@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Cube Run Stats</title>
+		<link rel="stylesheet" href="res/css/views/main.css?rnd=1">
+		<style>
+			button {
+				background-color: rgba(0, 0, 0, 0);
+				color: rgb(255, 255, 255);
+				border: 1px solid rgb(255, 255, 255);
+			}
+			button:hover {
+				background-color: rgba(255, 255, 255, 0.1);
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<h1>Stats</h1>
+			<button onclick="saveStats()" id="saveBtn">Save</button>
+			<button onclick="loadStats()" id="loadBtn">Load</button>
+			<h2>Player</h2>
+			<p>Highscore: <span javascript-label="highscore">Loading...</span></p>
+			<p>Total Deaths: <span javascript-label="totalDeaths">Loading...</span></p>
+			<button onclick="done()" id="close">Back</button>
+		</main>
+		<script src="res/js/views/stats.js"></script>
+	</body>
+</html>

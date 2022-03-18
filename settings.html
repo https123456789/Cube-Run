@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Settings</title>
+		<link rel="stylesheet" href="res/css/views/main.css?rnd=1">
+		<style>
+			.container {
+				display: flex;
+				flex: 1;
+				margin-bottom: 1%;
+			}
+			.container > * {
+				margin-left: 1%;
+				margin-right: 1%;
+			}
+			.container > *:first-child {
+				margin-left: auto;
+			}
+			.container > *:last-child {
+				margin-right: auto;
+			}
+			.wrapper {
+				/*border: 1px solid rgb(255, 255, 255);*/
+				border-radius: 15px;
+				margin-bottom: 1%;
+				padding: 1%;
+			}
+			input {
+				text-align: center;
+				border: 1px solid rgb(255, 255, 255);
+				background-color: rgba(0, 0, 0, 0);
+				color: rgb(255, 255, 255);
+				outline: none;
+			}
+			input:focus {
+				outline: none;
+			}
+			.saveBtn {
+				background-color: rgba(0, 0, 0, 0);
+				color: rgb(255, 255, 255);
+				border: 1px solid rgb(255, 255, 255);
+				padding: 1%;
+			}
+			.saveBtn:hover {
+				background-color: rgba(255, 255, 255, 0.1);
+			}
+			.saved {
+				animation-name: saved;
+				animation-duration: 2s;
+			}
+			@keyframes saved {
+				0% {
+					background-color: rgba(0, 0, 0, 0);
+				}
+				50% {
+					background-color: rgba(0, 255, 0, 0.75);
+				}
+				100% {
+					background-color: rgba(0, 0, 0, 0);
+				}
+			}
+			#keybindings {
+				width: 60vw;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			#keybindingsSelection {
+				display: flex;
+				flex: 1;
+			}
+			.keybindingSelection {
+				border: 1px solid rgb(255, 255, 255);
+				border-radius: 15px;
+				background-color: rgba(0, 0, 0, 0.1);
+				color: rgb(255, 255, 255);
+				padding: 1%;
+				font-size: 1em;
+				margin-left: 1%;
+				margin-right: 1%;
+			}
+			.keybindingSelection:first-child {
+				margin-left: auto;
+			}
+			.keybindingSelection:last-child {
+				margin-right: auto;
+			}
+			.keybindingSelection:hover {
+				background-color: rgba(255, 255, 255, 0.1);
+			}
+			.keybindingSelection-active {
+				background-color: rgba(0, 255, 0, 0.1);
+			}
+			.keybindingSelection-active:hover {
+				background-color: rgba(0, 255, 0, 0.2);
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<h1 class="center">Settings</h1>
+			<h2 class="center">Keybindings</h2>
+			<p>Click on the name to select that keybinding.</p>
+			<div id="keybindingsSelection">
+				
+			</div>
+			<p>To set the keybindings for arrow keys, type the name listed below.</p>
+			<div class="container">
+				<p>Left Arrow Key: <code>ArrowLeft</code></p>
+				<p>Right Arrow Key: <code>ArrowRight</code></p>
+				<p>Up Arrow Key: <code>ArrowUp</code></p>
+				<p>Down Arrow Key: <code>ArrowDown</code></p>
+			</div>
+			<div id="keybindings">
+				
+			</div>
+			<button id="close" onclick="done()">Back</button>
+		</main>
+		<script src="res/js/views/settings.js" defer></script>
+	</body>
+</html>

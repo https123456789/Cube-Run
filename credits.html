@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="res/css/views/main.css?rnd=1">
+		<style>
+			ul {
+				font-size: 2em;
+			}
+			ul.no-b {
+				list-style-type: none;
+			}
+			#cnt {
+				z-index: 100;
+				position: fixed;
+				top: 0;
+				bottom: 0;
+				overflow-y: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<h1>Cube Run</h1>
+			<h2>Authors</h2>
+			<ul class="no-b">
+				<li>
+					<a href="https://github.com/https123456789">https123456789 (Ben Landon)</a>
+				</li>
+			</ul>
+			<h2>Libraries</h2>
+			<ul class="no-b">
+				<li>
+					<a href="https://threejs.org" style="display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto; width: 50%; margin-left: auto; margin-right: auto;">
+						<img src="https://raw.githubusercontent.com/mrdoob/three.js/dev/files/icon.svg" style="width: 10vw; background-color: rgb(255, 255, 255);"></img>
+						<p>Three.js</p>
+						<p></p>
+						<p>Used for graphics rendering.</p>
+					</a>
+				</li>
+			</ul>
+			<h2>Platforms</h2>
+			<ul class="no-b">
+				<li>
+					<a href="https://replit.com" style="display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto; width: 50%; margin-left: auto; margin-right: auto;">
+						<img src="https://replit.com/public/icons/favicon-196.png" style="width: 10vw;"></img>
+						<p>Replit</p>
+						<p></p>
+						<p>Replit's online editor was used to develop Cube Run.</p>
+					</a>
+				</li>
+				<li>
+					<a href="https://github.com" style="display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto; width: 50%; margin-left: auto; margin-right: auto;">
+						<img src="https://github.com/fluidicon.png" style="width: 10vw;"></img>
+						<p>Github</p>
+						<p></p>
+						<p>Github's online collaboration and version control tools were very useful in the development of Cube Run.</p>
+					</a>
+				</li>
+			</ul>
+			<button onclick="done()" id="close">Back</button>
+		</main>
+		<script src="res/lib/three.js"></script>
+		<script>
+			function done() {
+				document.getElementsByTagName("main")[0].classList.add("shrink");
+				document.getElementById("close").classList.add("shrink");
+				document.body.classList.add("fade");
+				window.setTimeout(() => {
+					window.parent.postMessage("creditsEnded", "*");
+				}, 1);
+			}
+		</script>
+	</body>
+</html>

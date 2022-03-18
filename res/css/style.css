@@ -1,18 +1,26 @@
 body {
 	margin: 0;
 	padding: 0;
-	background-color: rgba(50, 50, 50, 1);
-	/*overflow-x: hidden;*/
-	font-family: ubuntu, courier new, verdana;
+	background-color: rgba(0, 0, 0, 1);
+	overflow-y: hidden;
+	font-family: ubuntu, monospace;
+}
+
+a {
+	color: rgb(255, 255, 255);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
 }
 
 #info {
 	position: fixed;
-	top: 0;
+	top: 100vh;
 	left: 0;
 	width: 100vw;
 	z-index: 100;
-	display: block;
 	color: rgb(255, 255, 255);
 	/*border: 1px solid #ffffff;*/
 	display: grid;
@@ -60,14 +68,59 @@ body {
 	color: rgb(255, 255, 255);
 }
 
-.contextMenu {
-	display: none;
+#startMenu {
+	display: grid;
+	grid-template-columns: auto;
+	grid-template-rows: 15% 80% 5%;
 	position: fixed;
-	top: 10vh;
-	left: 10vw;
-	right: 10vw;
-	bottom: 10vh;
-	z-index: 1000;
-	background-color: rgb(255, 255, 255);
-	padding: 1%;
+	top: 5vh;
+	left: 0vw;
+	right: 0vw;
+	bottom: 5vh;
+	z-index: 10;
+	background-color: rgba(255, 255, 255, 0);
+	text-align: center;
+	color: rgb(255, 255, 255);
+	height: 90vh;
+	/*border: 1px solid white;*/
+	line-height: 10vh;
+	/*overflow-y: auto;*/
+	vertical-align: middle;
+}
+
+#startMenu > * {
+	margin: 0;
+}
+
+#startMenu > h1 {
+	font-family: monospace;
+	font-size: 5em;
+}
+
+#startMenu > h2 {
+	/**/
+}
+
+#bg {
+	width: 100vw;
+	height: 100vh;
+	border: none;
+	z-index: 1;
+}
+
+#loadingDiv {
+	color: rgb(255, 255, 255);
+	background-color: rgba(255, 255, 255, 0);
+	opacity: 0;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	font-size: 1.5em;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#loadingDiv > * {
+	position: relative;
+	top: 50%;
 }

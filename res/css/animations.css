@@ -1,0 +1,82 @@
+.slide-off-screen {
+	animation-name: slide-off-screen-anm;
+	animation-duration: 2s;
+	animation-fill-mode: forwards;
+}
+
+.fade {
+	animation-name: fade-anm;
+	animation-duration: 2s;
+	animation-fill-mode: forwards;
+}
+
+.fade-in {
+	animation-name: fade-in-anm;
+	animation-duration: 2s;
+	animation-fill-mode: forwards;
+}
+
+.slide-up {
+	animation-name: slide-up-anm;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+}
+
+.spin {
+	animation-name: spin;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+}
+
+.spin-dont-save {
+	animation-name: spin;
+	animation-duration: 1s;
+}
+
+@keyframes slide-off-screen-anm {
+	from {
+		top: 0;
+	}
+	to: {
+		top: 100vh;
+	}
+}
+
+@keyframes fade-anm {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes fade-in-anm {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes slide-up-anm {
+	from {
+		top: 100vh;
+	}
+	to {
+		top: 0;
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotateY(0deg);
+	}
+	50% {
+		transform: rotateY(180deg);
+	}
+	100% {
+		transform: rotateY(360deg);
+	}
+}

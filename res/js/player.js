@@ -14,18 +14,26 @@ class Player extends Entity {
 			this.keyupEvent(event);
 		});
 		this.speed = 0.1;
+		this.score = 0;
+		this.scoreFactor = 0.1;
+		this.distanceTraveled = 0;
 	}
 	update() {
+		// Update distance traveled
+		this.distanceTraveled += this.game.obstacleSpeed;
+		// Left movement
 		if (this.keys.left) {
 			this.cube.position.x += this.speed;
 			this.game.camera.position.x += this.speed;
 			this.game.gameLighting.light.position.x += this.speed;
 		}
+		// Right movement
 		if (this.keys.right) {
 			this.cube.position.x -= this.speed;
 			this.game.camera.position.x -= this.speed;
 			this.game.gameLighting.light.position.x -= this.speed;
 		}
+		// Keep player in world bounds
 		if (this.cube.position.x < this.game.bounds.right) {
 			this.cube.position.x = this.game.bounds.right;
 			this.game.camera.position.x = this.game.bounds.right;
@@ -38,6 +46,10 @@ class Player extends Entity {
 		}
 	}
 	collide(collider) {
+		if (this.game.dead) {
+			return;
+		}
+		window.gamedata.stats.player.totalDeaths += 1;
 		this.game.die();
 	}
 	/* Key Events */
@@ -57,6 +69,9 @@ class Player extends Entity {
 				this.keys.left = false;
 				break;
 			case 2:
+				if (!this.game.updater) {
+					break;
+				}
 				this.game.paused = !this.game.paused;
 				if (this.game.paused) {
 					document.getElementById("pauseMenu").style.display = "block";
@@ -66,7 +81,7 @@ class Player extends Entity {
 				break;
 		}
 	}
-	keyupEvent(evnet) {
+	keyupEvent(event) {
 		var key = event.key;
 		var action = this.checkKeyAction(key);
 		if (action < 0) {
@@ -82,6 +97,7 @@ class Player extends Entity {
 		}
 	}
 	checkKeyAction(key) {
+		//console.log(window.gamedata.keybindings);
 		if (key == window.gamedata.keybindings.selections[window.gamedata.keybindings.selection].left) {
 			return 0;
 		} else if (key == window.gamedata.keybindings.selections[window.gamedata.keybindings.selection].right) {

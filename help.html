@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Cube Run Help</title>
+		<link rel="stylesheet" href="res/css/views/main.css?rnd=1">
+	</head>
+	<body>
+		<main>
+			<button onclick="done()" id="close">Back</button>
+			<h1 class="center">Help</h1>
+			<h2 class="center">Controls</h2>
+			<p class="center" style="">To go left, press <code id="leftKey"></code>.</p>
+			<p class="center" style="font-size: 1.25em;">To go right, press <code id="rightKey"></code>.</p>
+			<h2 class="center">Goal</h2>
+			<p class="center">Avoid red cubes.</p>
+		</main>
+		<script>
+			function done() {
+				document.getElementsByTagName("main")[0].classList.add("shrink");
+				document.getElementById("close").classList.add("shrink");
+				document.body.classList.add("fade");
+				window.setTimeout(() => {
+					window.parent.postMessage("helpEnded", "*");
+				}, 1);
+			}
+
+			window.onload = () => {
+				document.getElementById("leftKey")
+					.innerHTML = window.parent
+					.gamedata.keybindings.selections[
+						window.parent
+							.gamedata
+							.keybindings
+							.selection
+					].left;
+				document.getElementById("rightKey")
+					.innerHTML = window.parent
+					.gamedata.keybindings.selections[
+						window.parent
+							.gamedata
+							.keybindings
+							.selection
+					].right;
+			}
+		</script>
+	</body>
+</html>
