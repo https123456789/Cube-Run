@@ -1,4 +1,3 @@
-/* exported Game */
 class Game {
 	constructor() {
 		/* Init events */
@@ -48,6 +47,7 @@ class Game {
 
 		this.paused = false;
 		this.gameStartTime = null;
+		this.dead = false;
 
 		/* Levels */
 		this.level = 1;
@@ -92,6 +92,20 @@ class Game {
 			window.gamedata.keybindings = JSON.parse(localStorage.getItem("keybindings"));
 		}
 
+		/* Initalize stats */
+		if (!localStorage.getItem("stats")) {
+			console.log("No localStorage stats");
+			window.gamedata.stats = {
+				player: {
+					highscore: 0,
+					totalDeaths: 0
+				}
+			}
+			localStorage.setItem("stats", JSON.stringify(window.gamedata.stats));
+		} else {
+			window.gamedata.stats = JSON.parse(localStorage.getItem("stats"));
+		}
+
 		console.log(window.gamedata);
 
 		document.addEventListener("visibilitychange", () => {
@@ -116,16 +130,24 @@ class Game {
 		// Reset game
 	}
 	die() {
+		this.dead = true;
+		console.log("game ended.");
+		// Save game data
+		this.updateStats();
+		// End Game
 		document.getElementById("gameOver").style.display = "block";
 		window.clearInterval(this.updater);
 		this.updater = null;
 	}
 	update() {
+		var now = (new Date).getTime();
+		if (now % 100 == 0) {
+			this.updateStats();
+		}
 		if (this.paused) {
 			return;
 		}
 		/* Game level update */
-		var now = (new Date).getTime();
 		if (now - this.levelStartTime >= this.levelTimeSwitch) {
 			this.level += 1;
 			this.levelStartTime = now;
@@ -139,6 +161,9 @@ class Game {
 		}
 		/* Update score */
 		this.player.score = Math.floor((this.player.scoreFactor * this.player.distanceTraveled) * 100) / 100;
+		if (this.player.score > window.gamedata.stats.player.highscore) {
+			window.gamedata.stats.player.highscore = this.player.score;
+		}
 		
 		/* Update Labels */
 		document.getElementById("levelDisplay").innerHTML = this.level;
@@ -163,6 +188,11 @@ class Game {
 		this.player.update();
 		/* Render */
 		this.renderer.render(this.scene, this.camera);
+	}
+	updateStats() {
+		// Save
+		localStorage.setItem("stats", JSON.stringify(window.gamedata.stats));
+		console.log("Updated game stats.");
 	}
 	updateSize() {
 		this.renderer.setSize(window.innerWidth, window.innerHeight);

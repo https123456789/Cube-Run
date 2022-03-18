@@ -46,6 +46,10 @@ class Player extends Entity {
 		}
 	}
 	collide(collider) {
+		if (this.game.dead) {
+			return;
+		}
+		window.gamedata.stats.player.totalDeaths += 1;
 		this.game.die();
 	}
 	/* Key Events */

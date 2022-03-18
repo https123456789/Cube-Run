@@ -3,11 +3,13 @@ var game = new Game();
 // Connect "buttons" on the home screen to the game
 var startButton = document.getElementById("startButton");
 var helpButton = document.getElementById("helpButton");
+var statsButton = document.getElementById("statsButton");
 var creditsButton = document.getElementById("creditsButton");
 var settingsButton = document.getElementById("settingsButton");
 var loadingDiv = document.getElementById("loadingDiv");
 
 startButton.onclick = () => {
+	startButton.style.pointerEvents = "none";
 	window.setTimeout(() => {
 		/*
 		// Play woosh sound
@@ -22,6 +24,7 @@ startButton.onclick = () => {
 	creditsButton.classList.add("fade");
 	helpButton.classList.add("fade");
 	settingsButton.classList.add("fade");
+	statsButton.classList.add("fade");
 	loadingDiv.classList.add("fade-in");
 	//startButton.classList.add("spin-dont-[save");
 	var menuHiderUpdater = window.setTimeout(() => {
@@ -33,12 +36,14 @@ startButton.onclick = () => {
 		creditsButton.classList.remove("fade");
 		helpButton.classList.remove("fade");
 		settingsButton.classList.remove("fade");
+		statsButton.classList.remove("fade");
 		alert("clearing");
 		window.clearTimeout(menuHiderUpdater);
 	}, 500);
 };
 
 helpButton.onclick = () => {
+	helpButton.style.pointerEvents = "none";
 	var el = document.createElement("iframe");
 	el.src = "help.html";
 	el.id = "helpIframe";
@@ -52,11 +57,25 @@ helpButton.onclick = () => {
 }
 
 creditsButton.onclick = () => {
+	creditsButton.style.pointerEvents = "none";
 	//creditsButton.classList.add("spin-dont-save");
 	rollCredits();
 };
 
+statsButton.onclick = () => {
+	statsButton.style.pointerEvents = "none";
+	var el = document.createElement("iframe");
+	el.id = "statsIframe";
+	el.src = "stats.html";
+	el.classList.add("iframeWindow");
+	document.body.appendChild(el);
+	el.onload = () => {
+		el.classList.add("slide-up");
+	}
+}
+
 settingsButton.onclick = () => {
+	settingsButton.style.pointerEvents = "none";
 	var el = document.createElement("iframe");
 	el.id = "settingsIframe";
 	el.src = "settings.html";
@@ -87,6 +106,7 @@ window.onmessage = (event) => {
 				document.body.removeChild(
 					document.getElementById("creditsIframe")
 				);
+				creditsButton.style.pointerEvents = "auto";
 			}, 1000);
 			break;
 		case "helpEnded":
@@ -94,12 +114,21 @@ window.onmessage = (event) => {
 				document.body.removeChild(
 					document.getElementById("helpIframe")
 				);
+				helpButton.style.pointerEvents = "auto";
 			}, 1000);
 		case "settingsEnded":
 			window.setTimeout(() => {
 				document.body.removeChild(
 					document.getElementById("settingsIframe")
 				);
+				settingsButton.style.pointerEvents = "auto";
+			}, 1000);
+		case "statsEnded":
+			window.setTimeout(() => {
+				document.body.removeChild(
+					document.getElementById("statsIframe")
+				);
+				statsButton.style.pointerEvents = "auto";
 			}, 1000);
 	}
 }

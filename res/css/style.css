@@ -2,9 +2,6 @@ body {
 	margin: 0;
 	padding: 0;
 	background-color: rgba(0, 0, 0, 1);
-	/*background-image: url("../img/cube.png");
-	background-repeat: no-repeat;
-	background-size: cover;*/
 	overflow-y: hidden;
 	font-family: ubuntu, monospace;
 }
@@ -74,12 +71,12 @@ a:hover {
 #startMenu {
 	display: grid;
 	grid-template-columns: auto;
-	grid-template-rows: auto auto auto auto auto auto auto;
+	grid-template-rows: 15% 80% 5%;
 	position: fixed;
-	top: 10vh;
+	top: 5vh;
 	left: 0vw;
 	right: 0vw;
-	bottom: 10vh;
+	bottom: 5vh;
 	z-index: 10;
 	background-color: rgba(255, 255, 255, 0);
 	text-align: center;
